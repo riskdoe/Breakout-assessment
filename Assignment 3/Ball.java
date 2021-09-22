@@ -39,7 +39,7 @@ public class Ball extends Sprite {
 		// Bounce off right side of screen
 		if(x >= Settings.WINDOW_WIDTH - Settings.BALL_WIDTH * 2) {
 			// TODO: Set x to the right edge of the screen (see the above if condition)
-			x = Settings.WINDOW_WIDTH - Settings.BALL_WIDTH;
+			x = Settings.WINDOW_WIDTH - Settings.BALL_WIDTH * 2;
 			// TODO: Change the x velocity to make the ball go left
 			setXVelocity(-xVelocity);
 		}
