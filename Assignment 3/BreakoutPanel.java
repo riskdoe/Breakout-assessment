@@ -1,5 +1,4 @@
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -195,7 +194,7 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         g.drawString(lifes, xPadding, yPadding);
         
         
-        // Draw debug infomation
+        // Draw debug information
         
         if (Settings.debugMode) {
             yPadding = 15;
