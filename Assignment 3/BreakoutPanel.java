@@ -94,11 +94,13 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 	
 	private void gameOver() {
 		// TODO: Set screen message
+		screenMessage = "Game Over";
 		stopGame();
 	}
 	
 	private void gameWon() {
 		// TODO: Set screen message
+		screenMessage = "You Win!";
 		stopGame();
 	}
 	
@@ -140,7 +142,7 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 		if(ball.getRectangle().intersects(paddle.getRectangle())) {
 			// Simplified touching of paddle
 			// Proper game would change angle of ball depending on where it hit the paddle
-			ball.setYVelocity(-1);
+			ball.setYVelocity(-Settings.BALL_VELOCITY);
 		}
 		
 		for(int i = 0; i < bricks.length; i++) {
@@ -184,6 +186,33 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
         
         // Draw lives left
         // TODO: Draw lives left in the top left hand corner
+        int xPadding = 10;
+        int yPadding = 30;
+        int fontSize = 30;
+        Font Fontlife = new Font("Serif", Font.BOLD, fontSize);
+        String lifes = Integer.toString(livesLeft);
+        g.setFont(Fontlife);
+        g.drawString(lifes, xPadding, yPadding);
+        
+        
+        // Draw debug infomation
+        
+        if (Settings.debugMode) {
+            yPadding = 15;
+            fontSize = 15;
+            Font Fontdebug = new Font("Serif", Font.BOLD, fontSize);
+            String debuginfo = "Ball X: " + Integer.toString(ball.getX()) + "Ball Y: " + Integer.toString(ball.getY());
+            g.setFont(Fontdebug);
+            int debuginfowidth = g.getFontMetrics().stringWidth(debuginfo);
+            g.drawString(debuginfo, (Settings.WINDOW_WIDTH / 2) - (debuginfowidth / 2), yPadding);
+            debuginfo = "Paddle X: " + Integer.toString(paddle.getX());
+            debuginfowidth = g.getFontMetrics().stringWidth(debuginfo);
+            g.drawString(debuginfo, (Settings.WINDOW_WIDTH / 2) - (debuginfowidth / 2), yPadding * 2);
+            debuginfo = "Ball Velocity X: " + Integer.toString(ball.getXVelocity()) + "Ball Velocity Y: " + Integer.toString(ball.getYVelocity());
+            debuginfowidth = g.getFontMetrics().stringWidth(debuginfo);
+            g.drawString(debuginfo, (Settings.WINDOW_WIDTH / 2) - (debuginfowidth / 2), yPadding * 3);
+        }
+
         
         // Draw screen message
         if(screenMessage != null) {
