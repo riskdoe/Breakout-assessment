@@ -22,6 +22,6 @@ public class Settings {
 	
 	//custom values to globally change other game settings
 	public static final int BALL_VELOCITY = 3;
-	public static boolean debugMode = true;
+	public static boolean debugMode = false;
 	
 }
