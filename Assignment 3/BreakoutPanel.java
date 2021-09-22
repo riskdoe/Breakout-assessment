@@ -21,6 +21,10 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 	private Paddle paddle;
 	private Brick bricks[];
 	
+	//custom value just to make movement not feel as jank
+	Boolean isleftPressed = false;
+	Boolean isrightPressed = false;
+	
 	public BreakoutPanel(Breakout game) {
 		
 		addKeyListener(this);
@@ -30,9 +34,13 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 		timer.start();
 		
 		// TODO: Create a new ball object and assign it to the appropriate variable
+		ball = new Ball();
 		// TODO: Create a new paddle object and assign it to the appropriate variable
+		paddle = new Paddle();
 		// TODO: Create a new bricks array (Use Settings.TOTAL_BRICKS)
+		bricks = new Brick[Settings.TOTAL_BRICKS];
 		// TODO: Call the createBricks() method
+		createBricks();
 	}
 	
 	private void createBricks() {
@@ -52,11 +60,33 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 	
 	private void paintBricks(Graphics g) {
 		// TODO: Loop through the bricks and call the paint() method
+		for(int i = 0; i < bricks.length; i++) {
+		bricks[i].paint(g);
+		}
+		
 	}
 	
 	private void update() {
 		if(gameRunning) {
 			// TODO: Update the ball and paddle
+			ball.update();
+			paddle.update();
+			
+			//handling movement of paddle here to allow for program handle left and right pressed at same time
+			int SPEED = Settings.BALL_VELOCITY * 2;
+			if (isleftPressed && isrightPressed) {
+				paddle.setXVelocity(0);
+			}
+			else if (isleftPressed) {
+				paddle.setXVelocity(-SPEED);
+			}
+			else if (isrightPressed) {
+				paddle.setXVelocity(SPEED);
+			}
+			else if(!isleftPressed || !isrightPressed) {
+				paddle.setXVelocity(0);
+			}
+			
 			collisions();
 			repaint();
 		}
@@ -91,6 +121,7 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 		}
 		
 		// Check for win
+		
 		boolean bricksLeft = false;
 		for(int i = 0; i < bricks.length; i++) {
 			// Check if there are any bricks left
@@ -126,20 +157,21 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 
 	            if (!bricks[i].isBroken()) {
 	                if (bricks[i].getRectangle().contains(pointRight)) {
-	                    ball.setXVelocity(-1);
+	                    ball.setXVelocity(-Settings.BALL_VELOCITY);
 	                } else if (bricks[i].getRectangle().contains(pointLeft)) {
-	                    ball.setXVelocity(1);
+	                    ball.setXVelocity(Settings.BALL_VELOCITY);
 	                }
 
 	                if (bricks[i].getRectangle().contains(pointTop)) {
-	                    ball.setYVelocity(1);
+	                    ball.setYVelocity(Settings.BALL_VELOCITY);
 	                } else if (bricks[i].getRectangle().contains(pointBottom)) {
-	                    ball.setYVelocity(-1);
+	                    ball.setYVelocity(-Settings.BALL_VELOCITY);
 	                }
 	                bricks[i].setBroken(true);
 	            }
 			}
 		}
+		
 	}
 	
 	@Override
@@ -164,11 +196,30 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO: Set the velocity of the paddle depending on whether the player is pressing left or right
+		//check update() for the change of Velocity as i have rewriten this to make it smoother
+		int keyCode = e.getKeyCode();
+		
+		if (keyCode == KeyEvent.VK_LEFT) {
+			isleftPressed = true;
+		}
+		if (keyCode == KeyEvent.VK_RIGHT) {
+			isrightPressed = true;
+		}
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO: Set the velocity of the paddle after the player has released the keys
+		//check update() for the change of Velocity as i have rewriten this to make it smoother
+		int keyCode = e.getKeyCode();
+		if (keyCode == KeyEvent.VK_LEFT) {
+			isleftPressed = false;
+		}
+		if (keyCode == KeyEvent.VK_RIGHT) {
+			isrightPressed = false;
+		}
+		
 	}
 
 	@Override
