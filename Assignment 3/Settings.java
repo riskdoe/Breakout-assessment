@@ -20,7 +20,7 @@ public class Settings {
 	public static final int LIVES_POSITION_X = 5;
 	public static final int LIVES_POSITION_Y = 15;
 	
-	//custom values to gobaly change other game settings
+	//custom values to globally change other game settings
 	public static final int BALL_VELOCITY = 1;
 	
 	
