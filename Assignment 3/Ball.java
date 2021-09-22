@@ -2,7 +2,7 @@ import java.awt.Graphics;
 
 public class Ball extends Sprite {
 
-	private int xVelocity = 1, yVelocity = -1;
+	private int xVelocity = Settings.BALL_VELOCITY, yVelocity = -Settings.BALL_VELOCITY;
 	
 	// Constructor
 	public Ball() {
