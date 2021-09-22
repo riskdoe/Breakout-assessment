@@ -21,7 +21,7 @@ public class Settings {
 	public static final int LIVES_POSITION_Y = 15;
 	
 	//custom values to globally change other game settings
-	public static final int BALL_VELOCITY = 1;
-	
+	public static final int BALL_VELOCITY = 3;
+	public static boolean debugMode = true;
 	
 }
