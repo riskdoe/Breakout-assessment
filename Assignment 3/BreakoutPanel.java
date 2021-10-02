@@ -71,7 +71,8 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 			ball.update();
 			paddle.update();
 			
-			//handling movement of paddle here to allow for program handle left and right pressed at same time
+			//handling movement of paddle here to allow for program to
+			//handle left and right pressed at same time
 			int SPEED = Settings.BALL_VELOCITY * 2;
 			if (isleftPressed && isrightPressed) {
 				paddle.setXVelocity(0);
